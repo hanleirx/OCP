@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: test-namespace
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appName: test
+  template:
+    metadata:
+      labels:
+        appName: test
+    spec:
+      containers:
+      - name: test
+        image: image-registry.openshift-image-registry.svc:5000/test-namespace/hello@sha256:91e7059c86ca718093
+        imagePullPolicy: Always
