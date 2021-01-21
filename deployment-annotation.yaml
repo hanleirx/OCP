@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: test-namespace
+  labels:
+    app: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appName: test
+  template:
+    metadata:
+      annotations:
+        alpha.image.policy.openshift.io/resolve-names: '*'
+      labels:
+        appName: test
+    spec:
+      containers:
+      - name: test
+        image: hello:latest
+        imagePullPolicy: Always
