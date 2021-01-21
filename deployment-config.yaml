@@ -1,0 +1,26 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: myimage-ref-source-mytag
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: myimage-ref-source-mytag
+    spec:
+      containers:
+      - image: 'ignored'
+        imagePullPolicy: Always
+        name: mycontainer
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - mycontainer
+      from:
+        kind: ImageStreamTag
+        name: hello:latest
+        namespace: myproject
+    type: ImageChange
